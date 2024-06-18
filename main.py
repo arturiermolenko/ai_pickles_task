@@ -39,7 +39,7 @@ async def summarize(request: Request):
 
     result = stuff_chain.invoke(documents)
 
-    return {"summary": result}
+    return {"summary": result["output_text"]}
 
 
 if __name__ == "__main__":
