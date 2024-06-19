@@ -22,7 +22,7 @@ app = FastAPI()
 async def summarize(request: Request):
     # Receiving data and creating Langchain Document from it
     data = await request.json()
-    documents = [Document(page_content=data.get("text", ""))]
+    document = Document(page_content=data.get("text", ""))
 
     # Define prompt
     prompt_template = """Write a concise summary of the following:
@@ -37,7 +37,7 @@ async def summarize(request: Request):
     # Define StuffDocumentsChain
     stuff_chain = StuffDocumentsChain(llm_chain=llm_chain, document_variable_name="text")
 
-    result = stuff_chain.invoke(documents)
+    result = stuff_chain.invoke([document])
 
     return {"summary": result["output_text"]}
 
